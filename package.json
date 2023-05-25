@@ -1,0 +1,31 @@
+{
+  "name": "weather-chrome-extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --watch --progress --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davfru/weather-chrome-extension.git"
+  },
+  "author": "Davide Fruci",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davfru/weather-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/davfru/weather-chrome-extension#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "html-webpack-plugin": "^5.5.1",
+    "react-dom": "^18.2.0",
+    "ts-loader": "^9.4.3",
+    "typescript": "^5.0.4",
+    "webpack": "^5.84.0",
+    "webpack-cli": "^5.1.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
