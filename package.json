@@ -18,8 +18,10 @@
   "homepage": "https://github.com/davfru/weather-chrome-extension#readme",
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.4",
     "html-webpack-plugin": "^5.5.1",
     "react-dom": "^18.2.0",
+    "style-loader": "^3.3.3",
     "ts-loader": "^9.4.3",
     "typescript": "^5.0.4",
     "webpack": "^5.84.0",
