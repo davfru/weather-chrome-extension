@@ -1,14 +1,29 @@
 import { fetchWeatherByCity, WeatherData } from '../../utils/api';
 import React, { useEffect, useState } from 'react';
-import { Card, Box, CardContent, Typography } from '@material-ui/core';
+import {
+  Card,
+  Box,
+  CardActions,
+  CardContent,
+  Typography,
+  Button,
+} from '@material-ui/core';
 
 const WeatherCardContainer: React.FC<{
   children: React.ReactNode;
-}> = ({ children }) => {
+  onDelete?: () => void;
+}> = ({ children, onDelete }) => {
   return (
     <Box mx={'4px'} my={'16px'}>
       <Card>
         <CardContent>{children}</CardContent>
+        <CardActions>
+          {onDelete && (
+            <Button color="secondary" onClick={onDelete}>
+              Delete
+            </Button>
+          )}
+        </CardActions>
       </Card>
     </Box>
   );
@@ -18,7 +33,8 @@ type WeatherCardState = 'loading' | 'error' | 'ready';
 
 const WeatherCard: React.FC<{
   city: string;
-}> = ({ city }) => {
+  onDelete?: () => void;
+}> = ({ city, onDelete }) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [cardState, setCardState] = useState<WeatherCardState>('loading');
 
@@ -33,7 +49,7 @@ const WeatherCard: React.FC<{
 
   if (cardState == 'loading' || cardState == 'error') {
     return (
-      <WeatherCardContainer>
+      <WeatherCardContainer onDelete={onDelete}>
         <Typography variant="body1">
           {cardState == 'loading'
             ? `Loading ${city} weather`
@@ -44,7 +60,7 @@ const WeatherCard: React.FC<{
   }
 
   return (
-    <WeatherCardContainer>
+    <WeatherCardContainer onDelete={onDelete}>
       <Typography variant="h5">{weatherData.name}</Typography>
       <Typography variant="body1">
         {Math.round(weatherData.main.temp)}

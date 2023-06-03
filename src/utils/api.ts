@@ -1,4 +1,4 @@
-const OPEN_WEATHER_API_KEY = '9d6fa28abc8871bff4e1e0391aa8c869';
+const OPEN_WEATHER_API_KEY = 'xxx';
 
 export interface WeatherData {
   name: string;
