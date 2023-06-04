@@ -1,1 +1,5 @@
-console.log("background running!")
+import { setStoredCities } from '../utils/storage';
+
+chrome.runtime.onInstalled.addListener(() => {
+  setStoredCities([]);
+});
