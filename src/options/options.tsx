@@ -8,6 +8,7 @@ import {
   CardContent,
   Button,
   Grid,
+  Switch,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -35,6 +36,13 @@ const App: React.FC<{}> = () => {
     });
   };
 
+  const handleAutoOverlayChange = (hasAutoOverlay: boolean) => {
+    setOptions({
+      ...options,
+      hasAutoOverlay,
+    });
+  };
+
   const handleSaveButtonClick = () => {
     setFormState('saving');
     setStoredOptions(options).then(() => setFormState('ready'));
@@ -59,6 +67,14 @@ const App: React.FC<{}> = () => {
                 placeholder="Enter a home city name"
                 value={options.homeCity}
                 onChange={(event) => handleHomeCityChange(event.target.value)}
+              />
+            </Grid>
+            <Grid item>
+              <Typography variant="body1">Overlay</Typography>
+              <Switch
+                color="primary"
+                checked={options.hasAutoOverlay}
+                onChange={(event, checked) => handleAutoOverlayChange(checked)}
               />
             </Grid>
             <Grid item>

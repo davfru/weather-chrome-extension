@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, InputBase, IconButton, Paper } from '@material-ui/core';
-import { Add as AddIcon } from '@material-ui/icons';
+import { Add as AddIcon, PictureInPicture } from '@material-ui/icons';
 import 'fontsource-roboto';
 import './popup.css';
-import WeatherCard from './WeatherCard';
+import WeatherCard from '../components/WeatherCard';
 import {
   setStoredCities,
   getStoredCities,
@@ -12,6 +12,7 @@ import {
   setStoredOptions,
   LocalStorageOptions,
 } from '../utils/storage';
+import { Messages } from '../utils/message';
 
 const App: React.FC<{}> = () => {
   const [cities, setCities] = useState<string[]>([]);
@@ -35,8 +36,6 @@ const App: React.FC<{}> = () => {
     });
   };
 
-  console.log(cityInput);
-
   const handleCityDeleteButtonClick = (index: number) => {
     cities.splice(index, 1);
 
@@ -45,6 +44,20 @@ const App: React.FC<{}> = () => {
     setStoredCities(updatedCities).then(() => {
       setCities(updatedCities);
     });
+  };
+
+  const handleOverlayButton = () => {
+    chrome.tabs.query(
+      {
+        active: true,
+      },
+      (tabs) => {
+        if (tabs.length > 0) {
+          chrome.tabs.sendMessage(tabs[0].id, Messages.TOGGLE_OVERLAY);
+          console.log('message sent');
+        }
+      }
+    );
   };
 
   const handleTempScaleButtonClick = () => {
@@ -69,6 +82,7 @@ const App: React.FC<{}> = () => {
               <Box px="15px" py="5px">
                 <InputBase
                   placeholder="Add city"
+                  name="cityName"
                   value={cityInput}
                   onChange={(event) => setCityInput(event.target.value)}
                 ></InputBase>
@@ -83,6 +97,15 @@ const App: React.FC<{}> = () => {
               <Box py="4px">
                 <IconButton onClick={handleTempScaleButtonClick}>
                   {options.tempScale === 'metric' ? '\u2103' : '\u2109'}
+                </IconButton>
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item>
+            <Paper>
+              <Box py="4px">
+                <IconButton onClick={handleOverlayButton}>
+                  <PictureInPicture />
                 </IconButton>
               </Box>
             </Paper>
