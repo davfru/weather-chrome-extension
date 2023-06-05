@@ -1,5 +1,6 @@
 import {
   fetchWeatherByCity,
+  getWeatherIconSrc,
   OpenWeatherTempScale,
   WeatherData,
 } from '../../utils/api';
@@ -11,6 +12,7 @@ import {
   CardContent,
   Typography,
   Button,
+  Grid,
 } from '@material-ui/core';
 import './WeatherCard.css';
 
@@ -47,6 +49,8 @@ const WeatherCard: React.FC<{
   useEffect(() => {
     fetchWeatherByCity(city, tempScale)
       .then((data) => {
+        console.log('weather: ', data);
+        console.log('weather: ', data.weather[0].icon);
         setWeatherData(data);
         setCardState('ready');
       })
@@ -68,13 +72,32 @@ const WeatherCard: React.FC<{
 
   return (
     <WeatherCardContainer onDelete={onDelete}>
-      <Typography className="weatherCard-title">{weatherData.name}</Typography>
-      <Typography className="weatherCard-body">
-        {Math.round(weatherData.main.temp)}
-      </Typography>
-      <Typography className="weatherCard-body">
-        Feels like: {Math.round(weatherData.main.feels_like)}
-      </Typography>
+      <Grid container justify="space-around">
+        <Grid item>
+          <Typography className="weatherCard-title">
+            {weatherData.name}
+          </Typography>
+          <Typography className="weatherCard-temp">
+            {Math.round(weatherData.main.temp)}
+          </Typography>
+          <Typography className="weatherCard-body">
+            Feels like: {Math.round(weatherData.main.feels_like)}
+          </Typography>
+        </Grid>
+        <Grid item>
+          {weatherData.weather.length > 0 && (
+            <>
+              <img
+                src={getWeatherIconSrc(weatherData.weather[0].icon)}
+                alt=""
+              />
+              <Typography className="weatherCard-body">
+                {weatherData.weather[0].main}
+              </Typography>
+            </>
+          )}
+        </Grid>
+      </Grid>
     </WeatherCardContainer>
   );
 };

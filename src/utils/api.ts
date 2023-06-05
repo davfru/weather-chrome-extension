@@ -94,3 +94,7 @@ export const fetchWeatherByCity = async (
   const data = await res.json();
   return data;
 };
+
+export const getWeatherIconSrc = (iconCode: string) => {
+  return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+};
